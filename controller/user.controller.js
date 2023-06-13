@@ -1,30 +1,16 @@
 const fs = require('fs')
 const db = require('../bd')
-const path = require('path')
 
 class UserControler {
     async userLogo (req, res) {
         const userLogoName = req.params.name 
-        fs.readFile(`STORAGE/user_images/user_logo/${userLogoName}`, (err, data) => {
+        fs.readFile(`STORAGE/user_images/${userLogoName}`, (err, data) => {
             if (err) console.log(err)
             res.end(data)
         });
     }
     async newUserLogo (req, res) {
-        const { newLogo } = req.body
-        // fs.readdir('test/', (err, files) => {
-        //     if (err) throw err;
-          
-        //     for (const file of files) {
-        //       fs.unlink(path.join('test/', file), err => {
-        //         if (err) throw err;
-        //       });
-        //     }
-        //   });
-        // fs.readFile(`STORAGE/user_images/user_logo/${userLogoName}`, (err, data) => {
-        //     if (err) console.log(err)
-        //     res.end(data)
-        // });
+
     }
     async login (req, res) {
         const {email, password} = req.body
@@ -53,47 +39,33 @@ class UserControler {
             [firstName, lastName, phoneNumber, email, password])
             const user = {
                 id: newUser.rows[0].id,
-                firstName: newUser.rows[0].first_name,
-                lastName: newUser.rows[0].last_name,
+                first_name: newUser.rows[0].first_name,
+                last_name: newUser.rows[0].last_name,
                 email: newUser.rows[0].email,
-                phoneNumber: newUser.rows[0].phone_number,
+                phone_number: newUser.rows[0].phone_number,
                 role: newUser.rows[0].role,
-                userLogo: newUser.rows[0].user_logo,
+                user_logo: newUser.rows[0].user_logo,
             }
             res.json(user)
         } else {
             res.status(400).send('Not Found')
         }
     }
-    async owner (req, res) {
-        const {id} = req.body
-        await db.query(`UPDATE "user" 
-        SET name = 'owner' WHERE id = $1`, 
-        [ id ])
-    }
-    async menage (req, res) {
-        const {id} = req.body
-        await db.query(`UPDATE "user" 
-        SET name = 'menage' WHERE id = $1`, 
-        [ id ])
-    }
-    async employee (req, res) {
-        const {id} = req.body
-        await db.query(`UPDATE "user" 
-        SET name = 'employee' WHERE id = $1`, 
-        [ id ])
-    }
-    async admin (req, res) {
-        const {id} = req.body
-        await db.query(`UPDATE "user" 
-        SET name = 'admin' WHERE id = $1`, 
-        [ id ])
-    }
-    async user (req, res) {
-        const {id} = req.body
-        await db.query(`UPDATE "user" 
-        SET name = 'user' WHERE id = $1`, 
-        [ id ])
+    async newRole (req, res) {
+        const { id, role } = req.body
+        const newUser = await db.query(`UPDATE "user" 
+        SET role = $1 WHERE id = $2 RETURNING *`, 
+        [ role, id ])
+        const user = {
+            id: newUser.rows[0].id,
+            first_name: newUser.rows[0].first_name,
+            last_name: newUser.rows[0].last_name,
+            email: newUser.rows[0].email,
+            phone_number: newUser.rows[0].phone_number,
+            role: newUser.rows[0].role,
+            user_logo: newUser.rows[0].user_logo,
+        }
+        res.json(user)
     }
 }
 

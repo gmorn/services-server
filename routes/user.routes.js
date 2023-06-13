@@ -2,8 +2,6 @@ const Router = require('express')
 const router = new Router()
 const userController = require('../controller/user.controller')
 const multer = require('multer')
-
-
 const randomstring = require("randomstring");
 
 
@@ -21,11 +19,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage:storage });
 
-router.put('/user/owner', userController.owner)
-router.put('/user/menage', userController.menage)
-router.put('/user/employee', userController.employee)
-router.put('/user/admin', userController.admin)
-router.put('/user/user', userController.user)
+router.put('/user/role', userController.newRole)
 
 router.post('/user/login', userController.login)
 router.post('/user/registration', userController.registration)

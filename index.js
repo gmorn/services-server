@@ -6,6 +6,7 @@ const commentRouter = require('./routes/comment.routes')
 const cors = require('cors');
 const fs = require('fs');
 const multer = require('multer')
+const bodyParser = require('body-parser');
 
 const PORT = process.env.PORT || 8080
 
@@ -13,9 +14,10 @@ const app = express()
 
 
 app.use(cors({
-    origin: 'http://localhost:3000'
+  origin: 'http://localhost:3000'
 }));
 
+app.use(bodyParser.json());
 
 // лого пользователя
 app.get('/user_logo', (req, res) => {
