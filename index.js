@@ -19,15 +19,6 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
-// лого пользователя
-app.get('/user_logo', (req, res) => {
-  fs.readFile('STORAGE/user_images/default_logo/default_user_logo.png', (err, data) => {
-    if (err) throw err;
-    res.writeHead(200, { 'Content-Type': 'image/png'});
-    res.end(data);
-  });
-});
-
 // получение пользователя по дефолту
 app.get('/user_logo', (req, res) => {
   fs.readFile('STORAGE/user_images/default_logo/default_user_logo.png', (err, data) => {
@@ -36,43 +27,6 @@ app.get('/user_logo', (req, res) => {
     res.end(data);
   });
 });
-
-// шапка организации
-app.get('/user_logo', (req, res) => {
-  fs.readFile('STORAGE/user_images/default_logo/default_user_logo.png', (err, data) => {
-    if (err) throw err;
-    res.writeHead(200, { 'Content-Type': 'image/png'});
-    res.end(data);
-  });
-});
-
-// лого организации
-app.get('/user_logo', (req, res) => {
-  fs.readFile('STORAGE/user_images/default_logo/default_user_logo.png', (err, data) => {
-    if (err) throw err;
-    res.writeHead(200, { 'Content-Type': 'image/png'});
-    res.end(data);
-  });
-});
-
-// превью услуги
-app.get('/user_logo', (req, res) => {
-  fs.readFile('STORAGE/user_images/default_logo/default_user_logo.png', (err, data) => {
-    if (err) throw err;
-    res.writeHead(200, { 'Content-Type': 'image/png'});
-    res.end(data);
-  });
-});
-
-// шапка услуги
-app.get('/user_logo', (req, res) => {
-  fs.readFile('STORAGE/user_images/default_logo/default_user_logo.png', (err, data) => {
-    if (err) throw err;
-    res.writeHead(200, { 'Content-Type': 'image/png'});
-    res.end(data);
-  });
-});
-
 
 app.use(express.json())
 app.use('/api', userRouter)
